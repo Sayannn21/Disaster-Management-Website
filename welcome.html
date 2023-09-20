@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enfocers</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        <div class="hero">
+            <nav>
+                <img src="logo.png" class="logo">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <img src="img_avatar.png" class="user-profile">
+                <ul>
+                    <li><a href="#">Log Out</a></li>
+                </ul>
+            </nav>
+            <div class="containeer">
+                <div class="search-bar">
+                    <div id="select">
+                        <p id="selectText">All categories</p>
+                         <img src="dropdown.png">
+                         <ul id="list">
+                            <li class="options">All categories</li>
+                            <li class="options">Flood rescue</li>
+                            <li class="options">Earthquaqe rescue</li>
+                            <li class="options">Fire rescue</li>
+                         </ul>
+                    </div>
+                    <input type="text" id="inputfield" placeholder="Search In All Categories">
+                </div>
+            </div>
+        </div>
+        <footer class="footer-section">
+            <div class="container">
+              <div class="footer-cta pt-5 pb-5">
+                <div class="row">
+                  <div class="col-xl-4 col-md-4 mb-30">
+                    <div class="single-cta">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <div class="cta-text">
+                        <h4>Find us</h4>
+                        <span>1010 Avenue, sw 54321, chandigarh</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-4 mb-30">
+                    <div class="single-cta">
+                      <i class="fas fa-phone"></i>
+                      <div class="cta-text">
+                        <h4>Call us</h4>
+                        <span>9876543210 0</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-4 mb-30">
+                    <div class="single-cta">
+                      <i class="far fa-envelope-open"></i>
+                      <div class="cta-text">
+                        <h4>Mail us</h4>
+                        <span>mail@info.com</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="footer-content pt-5 pb-5">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 mb-50">
+                    <div class="footer-widget">
+                      <div class="footer-logo">
+                        <a href="index.html"><img src="logo.png" class="img" alt="logo"></a>
+                      </div>
+                      <div class="footer-text">
+                        <p>Lorem ipsum dolor sit amet, consec tetur adipisicing elit, sed do eiusmod tempor incididuntut consec tetur adipisicing
+                          elit,Lorem ipsum dolor sit amet.</p>
+                      </div>
+                      <div class="footer-social-icon">
+                        <span>Follow us</span>
+                        <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
+                        <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
+                        <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                    <div class="footer-widget">
+                      <div class="footer-widget-heading">
+                        <h3>Useful Links</h3>
+                      </div>
+                      <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About </a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Contact us</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+                    <div class="footer-widget">
+                      <div class="footer-widget-heading">
+                        <h3>Subscribe</h3>
+                      </div>
+                      <div class="footer-text mb-25">
+                        <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+                      </div>
+                      <div class="subscribe-form">
+                        <form action="#">
+                          <input type="text" placeholder="Email Address">
+                          <button><i class="fab fa-telegram-plane"></i></button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="copyright-area">
+              <div class="container">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                    <div class="copyright-text">
+                      <p>Copyright &copy; 2018, All Right Reserved <a href="https://codepen.io/anupkumar92/">Anup</a></p>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                    <div class="footer-menu">
+                      <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Policy</a></li>
+                        <li><a href="#">Contact</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </footer>
+        <script>
+           let select = document.getElementById("select");
+           let list = document.getElementById("list");
+           let selectText = document.getElementById("selectText");
+           let inputfield = document.getElementById("inputfield");
+           let options = document.getElementsByClassName("options");
+
+
+           select.onclick = function(){
+                list.classList.toggle("open");
+           }
+            for(option of options){
+                option.onclick = function(){
+                    selectText.innerHTML = this.innerHTML;
+                    inputfield.placeholder = "Search In " +  selectText.innerHTML;
+                }
+            }
+        </script>
+</body>
+</html>

@@ -1,178 +1,430 @@
-<form id="myForm" method="POST">
-  <label for="inputState">Rescue agency</label>
-    <select id="myDropdown" name="selectedOption">
-      <option value="option1">Fire Brigade</option>
-      <option value="option2">Flood Control</option>
-      <option value="option3">Electric control</option>
-    </select>
-    
-   
-    <label for="inputState">Police Station</label>
-      <select id="Police station" name="selectedOption">
-        <option value="option1">Tangra ps</option>
-        <option value="option2">Bantala ps</option>
-        <option value="option3">Bit ps</option>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Styles for the popup form */
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1;
+    }
+
+    /* Style for the popup form */
+    .popup {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      z-index: 2;
+    }
+
+    /* Style for the close icon */
+    .close-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button type="button" class="btn btn-secondary" id="openBtn">Add Agency</button>
+  <button type="button" class="btn btn-info" id="openBtn2">Show Agency</button>
+  <button type="button" class="btn btn-info" id="openBtn3">Update Agency</button>
+  <button type="button" class="btn btn-info" id="openBtn4">Logout</button>
+
+  <!-- The overlay and popup form -->
+  <div class="overlay" id="overlay"></div>
+
+  <div class="popup" id="popup">
+    <span class="close-icon" id="closeBtn">&#10006;</span>
+     <h2>Registration Form</h2>
+      <form id="myForm">
+      <label for="myDropdown">Rescue Agency Type :</label>
+      <select id="myDropdown" name="agency" required>
+        <option>Select option</option>
+        <option value="fire">Fire Brigade</option>
+        <option value="flood">Flood Control</option>
+        <option value="electric">Electric control</option>
+        <option value="police">Police</option>
+        <option value="ambulance">Ambulance</option>
       </select>
-    
-  
+      <br>
+      <br>
+      <label>Agency Name : <input type="text" name="name" required placeholder="Enter Agency Name"></label>
+      <br>
+      <br>
+      <label>Agency Registration No. : <input type="text" name="rid" required
+          placeholder="Enter Agency Reg. No."></label>
+      <br>
+      <br>
       <script type="text/javascript">
-        var states_arr = new Array("Andhra Pradesh" , "Arunachal Pradesh" , "Assam" , "Bihar" , "Chhattisgarh" , "Goa" , "Gujarat" , "Haryana" , "Himachal Pradesh" , "Jammu and Kashmir" , "Jharkhand" , "Karnataka" , "Kerala" , "Madhya Pradesh" , "Maharashtra" , "Manipur" , "Meghalaya" , "Mizoram" , "Nagaland" , "Orissa" , "Punjab" , "Rajasthan" , "Sikkim" , "Tamil Nadu" , "Telangana" , "Tripura" , "Uttar Pradesh" , "Uttaranchal" , "West Bengal" , "Andaman and Nicobar Islands" , "Chandigarh" , "Dadra and Nagar Haveli" , "Daman and Diu" , "Delhi" , "Lakshadweep" , "Pondicherry");
-    
+        var states_arr = new Array("Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Orissa", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttaranchal", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Lakshadweep", "Pondicherry");
+
         var district_arr = new Array();
-    
+
         district_arr[0] = "";
-    
+
         district_arr[1] = "Anantapur|Chittoor|Cuddapah|East Godavari|Guntur|Krishna|Kurnool|Nellore|Prakasam|Srikakulam|Vishakapatnam|Vizianagaram|West Godavari";
-    
+
         district_arr[2] = "Anjaw|Changlang|Dibang Valley|East Kameng|East Siang|Kra Daadi|Kurung Kumey|Lohit|Longding|Lower Dibang Valley|Lower Subansiri|Namsai|Papum Pare|Siang|Tawang|Tirap|Upper Siang|Upper Subansiri|West Kameng|West Siang";
-    
+
         district_arr[3] = "Baksa|Barpeta|Bongaigaon|Cachar|Chirang|Darrang|Dhemaji|Dhubri|Dibrugarh|Dima Hasao|Goalpara|Golaghat|Hailakandi|Jorhat|Kamrup M|Kamrup R|Karbi Anglong|Karimganj|Kokrajhar|Lakhimpur|Marigaon|Nagaon|Nalbari|Sibsagar|Sonitpur|Tinsukia|Udalguri";
-    
+
         district_arr[4] = "Araria|Arwal|Aurangabad|Banka|Begusarai|Bhagalpur|Bhojpur|Buxar|Darbhanga|East Champaran|Gaya|Gopalganj|Jamui|Jehanabad|Kaimur Bhabua|Katihar|Khagaria|Kishanganj|Lakhisarai|Madhepura|Madhubani|Munger|Muzaffarpur|Nalanda|Nawada|Patna|Purnia|Rohtas|Saharsa|Samastipur|Saran|Sheikhpura|Sheohar|Sitamarhi|Siwan|Supaul|Vaishali|West Champaran";
-    
+
         district_arr[5] = "Balod|Baloda Bazar|Balrampur|Bastar|Bemetra|Bijapur|Bilaspur|Dantewada|Dhamtari|Durg|Gariyaband|Janjgir Champa|Jashpur|Kanker|Kawardha|Kondagaon|Korba|Koriya|Mahasamund|Mungeli|Narayanpur|Raigarh|Raipur|Rajnandgaon|Sukma|Surajpur|Surguja";
-    
+
         district_arr[6] = "North Goa|South Goa";
-    
+
         district_arr[7] = "Ahmedabad|Amreli|Anand|Aravalli|Banas Kantha|Bharuch|Bhavnagar|Botad|Chhotaudepur|Dahod|Devbhumi Dwarka|Gandhinagar|Gir Somnath|Jamnagar|Junagadh|Kachchh|Kheda|Mahesana|Mahisagar|Morbi|Narmada|Navsari|Panch Mahals|Patan|Porbandar|Rajkot|Sabar Kantha|Surat|Surendranagar|Tapi|The Dangs|Vadodara|Valsad";
-    
+
         district_arr[8] = "Ambala|Bhiwani|Faridabad|Fatehabad|Gurgaon|Hisar|Jhajjar|Jind|Kaithal|Karnal|Kurukshetra|Mahendragarh|Mewat|Palwal|Panchkula|Panipat|Rewari|Rohtak|Sirsa|Sonipat|Yamunanagar";
-    
+
         district_arr[9] = "Bilaspur|Chamba|Hamirpur|Kangra|Kinnaur|Kullu|Lahul Spiti|Mandi|Shimla|Sirmaur|Solan|Una";
-    
+
         district_arr[10] = "Anantnag|Badgam|Bandipora|Baramula|Doda|Ganderbal|Jammu|Kargil|Kathua|Kishtwar|Kulgam|Kupwara|Leh Ladakh|Poonch|Pulwama|Rajouri|Ramban|Reasi|Samba|Shopian|Srinagar|Udhampur";
-    
+
         district_arr[11] = "Bokaro|Chatra|Deoghar|Dhanbad|Dumka|Garhwa|Giridih|Godda|Gumla|Hazaribagh|Jamtara|Khunti|Kodarma|Latehar|Lohardaga|Pakaur|Palamu|Pashchimi Singhbhum|Purbi Singhbhum|Ramgarh|Ranchi|Sahibganj|Saraikela|Simdega";
-    
+
         district_arr[12] = "Bagalkote|Bangalore Rural|Bangalore Urban|Belgaum|Bellary|Bidar|Bijapur|Chamrajnagar|Chikkaballapur|Chikmagalur|Chitradurga|Dakshina Kannada|Davanagere|Dharwad|Gadag|Gulbarga|Hassan|Haveri|Kodagu|Kolar|Koppal|Mandya|Mysore|Raichur|Ramanagar|Shimoga|Tumkur|Udupi|Uttara Kannada|Yadgir";
-    
+
         district_arr[13] = "Alappuzha|Ernakulam|Idukki|Kannur|Kasaragod|Kollam|Kottayam|KOZHIKKODE|Malappuram|Palakkad|Pathanamthitta|Thiruvananthapuram|Thrissur|Wayanad";
-    
+
         district_arr[14] = "Agar Malwa|Alirajpur|Anuppur|Ashok Nagar|Balaghat|Barwani|Betul|Bhind|Bhopal|Burhanpur|Chhatarpur|Chhindwada|Damoh|Datia|Dewas|Dhar|Dindori|Guna|Gwalior|Harda|Hoshangabad|Indore|Jabalpur|Jhabua|Katni|Khandwa|Khargone|Mandla|Mandsaur|Morena|Narsinghpur|Neemuch|Panna|Raisen|Rajgarh|Ratlam|Rewa|Sagar|Satna|Sehore|Seoni|Shahdol|Shajapur|Sheopur|Shivpuri|Sidhi|Singroli|Tikamgarh|Ujjain|Umaria|Vidisha";
-    
+
         district_arr[15] = "Ahmednagar|Akola|Amravati|Aurangabad|Bhandara|Bid|Brihan Mumbai|Buldana|Chandrapur|Dhule|Gadchiroli|Gondiya|Hingoli|Jalgaon|Jalna|Kolhapur|Latur|Nagpur|Nanded|Nandurbar|Nashik|Osmanabad|Palghar|Parbhani|Pune|Raigarh|Ratnagiri|Sangli|Satara|Sindhudurg|Solapur|Thane|Wardha|Washim|Yavatmal";
-    
+
         district_arr[16] = "Bishnupur|Chandel|Churachandpur|Imphal East|Imphal West|Senapati|Tamenglong|Thoubal|Ukhrul";
-    
+
         district_arr[17] = "East Garo Hills|East Jaintia Hills|East Khasi Hills|North Garo Hills|Ri Bhoi|South Garo Hills|South West Garo Hills|South West Khasi Hills|West Garo Hills|West Jaintia Hills|West Khasi Hills";
-    
+
         district_arr[18] = "Aizawl East|Aizawl West|Champhai|Kolasib|Lawngtlai|Lunglei|Mamit|Saiha|Serchhip";
-    
+
         district_arr[19] = "Dimapur|Kiphire|Kohima|Longleng|Mokokchung|Mon|Peren|Phek|Tuensang|Wokha|Zunheboto";
-    
+
         district_arr[20] = "Anugul|Balangir|Baleshwar|Bargarh|Baudh|Bhadrak|Cuttack|Deogarh|Dhenkanal|Gajapati|Ganjam|Jagatsinghpur|Jajapur|Jharsuguda|Kalahandi|Kandhamal|Kendrapara|Keonjhar|Khordha|Koraput|Malkangiri|Mayurbhanj|Nabarangapur|Nayagarh|Nuapada|Puri|Rayagada|Sambalpur|Sonapur|Sundargarh";
-    
-    
+
+
         district_arr[21] = "Amritsar|Barnala|Bathinda|Faridkot|Fatehgarh Sahib|Fazilka|Firozpur|Gurdaspur|Hoshiarpur|Jalandhar|Kapurthala|Ludhiana|Mansa|Moga|Mohali SAS Nagar|Muktsar|Nawanshahr|Pathankot|Patiala|Rupnagar|Sangrur|Tarn Taran";
-    
+
         district_arr[22] = "Ajmer|Alwar|Banswara|Baran|Barmer|Bharatpur|Bhilwara|Bikaner|Bundi|Chittaurgarh|Churu|Dausa|Dhaulpur|Dungarpur|Ganganagar|Hanumangarh|Jaipur|Jaisalmer|Jalor|Jhalawar|Jhunjhunun|Jodhpur|Karauli|Kota|Nagaur|Pali|Pratapgarh|Rajsamand|Sawai Madhopur|Sikar|Sirohi|Tonk|Udaipur";
-    
+
         district_arr[23] = "East|North|South|West";
-    
+
         district_arr[24] = "Ariyalur|Chennai|Coimbatore|Cuddalore|Dharmapuri|Dindigul|Erode|Kancheepuram|Kanniyakumari|Karur|Krishnagiri|Madurai|Nagapattinam|Namakkal|Nilgiris|Perambalur|Pudukkottai|Ramanathapuram|Salem|Sivaganga|Thanjavur|Theni|Thiruvallur|Thiruvarur|Tiruchirappalli|Tirunelveli|Tirupur|Tiruvanamalai|Toothukudi|Vellore|Viluppuram|Virudhunagar";
-    
+
         district_arr[25] = "Adilabad|Hyderabad|Karim Nagar|Khammam|Mahbubnagar|Medak|Nalgonda|Nizamabad|Ranga Reddy|Warangal Urban";
-    
+
         district_arr[26] = "Dhalai|Gomati|Khowai|North Tripura|Sipahijala|South Tripura|Unakoti|West Tripura";
-    
+
         district_arr[27] = "Agra|Aligarh|Allahabad|Ambedkar Nagar|Auraiya|Azamgarh|Bagpat|Bahraich|Ballia|Balrampur|Banda|Barabanki|Bareilly|Basti|Bijnor|Budaun|Bulandshahar|C S M Nagar|Chandauli|Chitrakoot|Deoria|Etah|Etawah|Faizabad|Farrukhabad|Fatehpur|Firozabad|Gautam Buddha Nagar|Ghaziabad|Ghazipur|Gonda|Gorakhpur|Hamirpur|Hapur|Hardoi|Hathras|Jalaun|Jaunpur|Jhansi|Jyotiba Phule Nagar|Kannauj|Kanpur Dehat|Kanpur Nagar|Kashi Ram Nagar|Kaushambi|Kushinagar|Lakhimpur Kheri|Lalitpur|Lucknow|Maharajganj|Mahoba|Mainpuri|Mathura|Maunathbhanjan|Meerut|Mirzapur|Moradabad|Muzaffarnagar|Pilibhit|Pratapgarh|Rae Bareli|Rampur|Saharanpur|Sambhal|Sant Kabir Nagar|Sant Ravidas Nagar|Shahjahanpur|Shamli|Shrawasti|Siddharth Nagar|Sitapur|Sonbhadra|Sultanpur|Unnav|Varanasi";
-    
+
         district_arr[28] = "Almora|Bageshwar|Chamoli|Champawat|Dehradun|Garhwal|Hardwar|Nainital|Pithoragarh|Rudraprayag|Tehri Garhwal|Udham Singh Nagar|Uttarkashi";
-    
+
         district_arr[29] = "Alipurduar|Bankura|Barddhaman|Birbhum|Dakshin Dinajpur|Darjiling|Haora|Hugli|Jalpaiguri|Koch Bihar|Maldah|Murshidabad|Nadia|North Twenty Four Parganas|Paschim Medinipur|Purba Medinipur|Puruliya|South Twenty Four Parganas|Uttar Dinajpur";
-    
-    
-    
+
+
+
         district_arr[30] = "Nicobar|North and Middle Andaman|South Andaman";
-    
+
         district_arr[31] = "Chandigarh";
-    
+
         district_arr[32] = "Dadra and Nagar Haveli";
-    
+
         district_arr[33] = "Daman|Diu";
-    
+
         district_arr[34] = "Central|East|New Delhi|North|North East|North West|Shahdara|South|South East|South West|West";
-    
+
         district_arr[35] = "Lakshadweep";
-    
+
         district_arr[36] = "Karaikal|Mahe|Pondicherry|Yanam";
-    
-    
-        function populateDistricts(stateElementId, districtElementId) 
-        {
+
+
+        function populateDistricts(stateElementId, districtElementId) {
           var selectedStateIndex = document.getElementById(stateElementId).selectedIndex;
           var districtElement = document.getElementById(districtElementId);
           districtElement.length = 0;
           districtElement.options[0] = new Option('Select district', '');
           districtElement.selectedIndex = 0;
           var district_ar = district_arr[selectedStateIndex].split("|");
-          for (var i = 0; i < district_ar.length; i++) 
-          {
+          for (var i = 0; i < district_ar.length; i++) {
             districtElement.options[districtElement.length] = new Option(district_ar[i], district_ar[i]);
           }
         }
-    
-        function populateStates(stateElementId, districtElementId)
-        {
+
+        function populateStates(stateElementId, districtElementId) {
           // given the id of the <select> tag as function argument, it inserts <option> tags
           var stateElement = document.getElementById(stateElementId);
           stateElement.length = 0;
           stateElement.options[0] = new Option('Select state', '-1');
           stateElement.selectedIndex = 0;
-          for (var i = 0; i < states_arr.length; i++)
-          {
+          for (var i = 0; i < states_arr.length; i++) {
             stateElement.options[stateElement.length] = new Option(states_arr[i], states_arr[i]);
           }
-    
+
           // Assigned all countries. Now assign event listener for the states.
-    
-          if (districtElementId) 
-          {
-            stateElement.onchange = function () 
-            {
+
+          if (districtElementId) {
+            stateElement.onchange = function () {
               populateDistricts(stateElementId, districtElementId);
             };
           }
         }
       </script>
-    
-  
-    <html>
-      <label for="inputState">State</label>
-    <select id="state_input" name="state_input"></select>
-    <label for="inputState">District</label>
-    <select name="district_input" id="district_input"></select>
-    <script language="javascript">
-    populateStates("state_input", "district_input");
-    </script>
-    <html>
-   
 
-    <label>Pincode <input type="text" required></label>
-    <input type="submit" value="Submit">
+      <label for="state_input">State : </label>
+      <select id="state_input" name="state" required></select>
+      <br>
+      <br>
+      <label for="district_input">District : </label>
+      <select name="district" id="district_input" required></select>
 
+      <script language="javascript">
+        populateStates("state_input", "district_input");
+      </script>
+      <br>
+      <br>
+      <label>Pincode : <input type="number" name="pincode" required placeholder="Enter Pincode"></label>
+      <br>
+      <br>
+      <label>Contact No. : <input type="number" name="number1" required placeholder="Enter Contact No."></label>
+      <br>
+      <br>
+      <label>Alternative Contact No. : <input type="text" name="number2" placeholder="Enter Alternative  No."></label>
+      <br>
+      <br>
+      <input class="btn btn-primary" type="submit" value="Submit">
+      <input class="btn btn-primary" type="reset" value="Reset">
+
+    </form>
+
+  </div>
+
+  <!-- <h2>Stored Data:</h2>
+  <button id="showData">Show Data</button>
+  <div id="dataOutput"></div> -->
+  <div id="popup2" class="popup">
+    <span class="close-icon" id="closeBtn2">&#10006;</span>
+    <form action="http://localhost:3000/getData" method="get">
+    <label for="myDropdown">Rescue Agency Type :</label>
+      <select id="Dropdown" name="agency" required>
+        <option>Select option</option>
+        <option value="fire">Fire Brigade</option>
+        <option value="flood">Flood Control</option>
+        <option value="electric">Electric control</option>
+        <option value="police">Police</option>
+        <option value="ambulance">Ambulance</option>
+      </select>
+      <br>
+      <br>
+      <label>Agency Registration No.: <input type="number" name="reg" id="regno" required></label>
+      <br>
+      <br>
+      <input class="btn btn-primary" type="submit" value="Submit">
+      <input class="btn btn-primary" type="reset" value="Reset">
   </form>
+  </div>
 
-   
-  <script>
-    const form = document.getElementById('myForm');
-    const dropdown = document.getElementById('myDropdown');
+ 
+
+
+  <div class="popup" id="popup3">
+    <span class="close-icon" id="closeBtn3">&#10006;</span>
+     <h2>Update Form</h2>
+    <form id="myForm2">
+      <label for="myDropdown2">Rescue Agency Type :</label>
+      <select id="myDropdown2" name="agency" required>
+        <option>Select option</option>
+        <option value="fire">Fire Brigade</option>
+        <option value="flood">Flood Control</option>
+        <option value="electric">Electric control</option>
+        <option value="police">Police</option>
+        <option value="ambulance">Ambulance</option>
+      </select>
+      <br>
+      <br>
+      <label>Agency Name : <input type="text" name="name" required placeholder="Enter Agency Name"></label>
+      <br>
+      <br>
+      <label>Agency Registration No. : <input type="text" name="rid" required
+          placeholder="Enter Agency Reg. No."></label>
+      <br>
+      <br>
+      <script type="text/javascript">
+        var states_ar = new Array("Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Orissa", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttaranchal", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Lakshadweep", "Pondicherry");
+
+        var district_ar = new Array();
+
+        district_ar[0] = "";
+
+        district_ar[1] = "Anantapur|Chittoor|Cuddapah|East Godavari|Guntur|Krishna|Kurnool|Nellore|Prakasam|Srikakulam|Vishakapatnam|Vizianagaram|West Godavari";
+
+        district_ar[2] = "Anjaw|Changlang|Dibang Valley|East Kameng|East Siang|Kra Daadi|Kurung Kumey|Lohit|Longding|Lower Dibang Valley|Lower Subansiri|Namsai|Papum Pare|Siang|Tawang|Tirap|Upper Siang|Upper Subansiri|West Kameng|West Siang";
+
+        district_ar[3] = "Baksa|Barpeta|Bongaigaon|Cachar|Chirang|Darrang|Dhemaji|Dhubri|Dibrugarh|Dima Hasao|Goalpara|Golaghat|Hailakandi|Jorhat|Kamrup M|Kamrup R|Karbi Anglong|Karimganj|Kokrajhar|Lakhimpur|Marigaon|Nagaon|Nalbari|Sibsagar|Sonitpur|Tinsukia|Udalguri";
+
+        district_ar[4] = "Araria|Arwal|Aurangabad|Banka|Begusarai|Bhagalpur|Bhojpur|Buxar|Darbhanga|East Champaran|Gaya|Gopalganj|Jamui|Jehanabad|Kaimur Bhabua|Katihar|Khagaria|Kishanganj|Lakhisarai|Madhepura|Madhubani|Munger|Muzaffarpur|Nalanda|Nawada|Patna|Purnia|Rohtas|Saharsa|Samastipur|Saran|Sheikhpura|Sheohar|Sitamarhi|Siwan|Supaul|Vaishali|West Champaran";
+
+        district_ar[5] = "Balod|Baloda Bazar|Balrampur|Bastar|Bemetra|Bijapur|Bilaspur|Dantewada|Dhamtari|Durg|Gariyaband|Janjgir Champa|Jashpur|Kanker|Kawardha|Kondagaon|Korba|Koriya|Mahasamund|Mungeli|Narayanpur|Raigarh|Raipur|Rajnandgaon|Sukma|Surajpur|Surguja";
+
+        district_ar[6] = "North Goa|South Goa";
+
+        district_ar[7] = "Ahmedabad|Amreli|Anand|Aravalli|Banas Kantha|Bharuch|Bhavnagar|Botad|Chhotaudepur|Dahod|Devbhumi Dwarka|Gandhinagar|Gir Somnath|Jamnagar|Junagadh|Kachchh|Kheda|Mahesana|Mahisagar|Morbi|Narmada|Navsari|Panch Mahals|Patan|Porbandar|Rajkot|Sabar Kantha|Surat|Surendranagar|Tapi|The Dangs|Vadodara|Valsad";
+
+        district_ar[8] = "Ambala|Bhiwani|Faridabad|Fatehabad|Gurgaon|Hisar|Jhajjar|Jind|Kaithal|Karnal|Kurukshetra|Mahendragarh|Mewat|Palwal|Panchkula|Panipat|Rewari|Rohtak|Sirsa|Sonipat|Yamunanagar";
+
+        district_ar[9] = "Bilaspur|Chamba|Hamirpur|Kangra|Kinnaur|Kullu|Lahul Spiti|Mandi|Shimla|Sirmaur|Solan|Una";
+
+        district_ar[10] = "Anantnag|Badgam|Bandipora|Baramula|Doda|Ganderbal|Jammu|Kargil|Kathua|Kishtwar|Kulgam|Kupwara|Leh Ladakh|Poonch|Pulwama|Rajouri|Ramban|Reasi|Samba|Shopian|Srinagar|Udhampur";
+
+        district_ar[11] = "Bokaro|Chatra|Deoghar|Dhanbad|Dumka|Garhwa|Giridih|Godda|Gumla|Hazaribagh|Jamtara|Khunti|Kodarma|Latehar|Lohardaga|Pakaur|Palamu|Pashchimi Singhbhum|Purbi Singhbhum|Ramgarh|Ranchi|Sahibganj|Saraikela|Simdega";
+
+        district_ar[12] = "Bagalkote|Bangalore Rural|Bangalore Urban|Belgaum|Bellary|Bidar|Bijapur|Chamrajnagar|Chikkaballapur|Chikmagalur|Chitradurga|Dakshina Kannada|Davanagere|Dharwad|Gadag|Gulbarga|Hassan|Haveri|Kodagu|Kolar|Koppal|Mandya|Mysore|Raichur|Ramanagar|Shimoga|Tumkur|Udupi|Uttara Kannada|Yadgir";
+
+        district_ar[13] = "Alappuzha|Ernakulam|Idukki|Kannur|Kasaragod|Kollam|Kottayam|KOZHIKKODE|Malappuram|Palakkad|Pathanamthitta|Thiruvananthapuram|Thrissur|Wayanad";
+
+        district_ar[14] = "Agar Malwa|Alirajpur|Anuppur|Ashok Nagar|Balaghat|Barwani|Betul|Bhind|Bhopal|Burhanpur|Chhatarpur|Chhindwada|Damoh|Datia|Dewas|Dhar|Dindori|Guna|Gwalior|Harda|Hoshangabad|Indore|Jabalpur|Jhabua|Katni|Khandwa|Khargone|Mandla|Mandsaur|Morena|Narsinghpur|Neemuch|Panna|Raisen|Rajgarh|Ratlam|Rewa|Sagar|Satna|Sehore|Seoni|Shahdol|Shajapur|Sheopur|Shivpuri|Sidhi|Singroli|Tikamgarh|Ujjain|Umaria|Vidisha";
+
+        district_ar[15] = "Ahmednagar|Akola|Amravati|Aurangabad|Bhandara|Bid|Brihan Mumbai|Buldana|Chandrapur|Dhule|Gadchiroli|Gondiya|Hingoli|Jalgaon|Jalna|Kolhapur|Latur|Nagpur|Nanded|Nandurbar|Nashik|Osmanabad|Palghar|Parbhani|Pune|Raigarh|Ratnagiri|Sangli|Satara|Sindhudurg|Solapur|Thane|Wardha|Washim|Yavatmal";
+
+        district_ar[16] = "Bishnupur|Chandel|Churachandpur|Imphal East|Imphal West|Senapati|Tamenglong|Thoubal|Ukhrul";
+
+        district_ar[17] = "East Garo Hills|East Jaintia Hills|East Khasi Hills|North Garo Hills|Ri Bhoi|South Garo Hills|South West Garo Hills|South West Khasi Hills|West Garo Hills|West Jaintia Hills|West Khasi Hills";
+
+        district_ar[18] = "Aizawl East|Aizawl West|Champhai|Kolasib|Lawngtlai|Lunglei|Mamit|Saiha|Serchhip";
+
+        district_ar[19] = "Dimapur|Kiphire|Kohima|Longleng|Mokokchung|Mon|Peren|Phek|Tuensang|Wokha|Zunheboto";
+
+        district_ar[20] = "Anugul|Balangir|Baleshwar|Bargarh|Baudh|Bhadrak|Cuttack|Deogarh|Dhenkanal|Gajapati|Ganjam|Jagatsinghpur|Jajapur|Jharsuguda|Kalahandi|Kandhamal|Kendrapara|Keonjhar|Khordha|Koraput|Malkangiri|Mayurbhanj|Nabarangapur|Nayagarh|Nuapada|Puri|Rayagada|Sambalpur|Sonapur|Sundargarh";
+
+
+        district_ar[21] = "Amritsar|Barnala|Bathinda|Faridkot|Fatehgarh Sahib|Fazilka|Firozpur|Gurdaspur|Hoshiarpur|Jalandhar|Kapurthala|Ludhiana|Mansa|Moga|Mohali SAS Nagar|Muktsar|Nawanshahr|Pathankot|Patiala|Rupnagar|Sangrur|Tarn Taran";
+
+        district_ar[22] = "Ajmer|Alwar|Banswara|Baran|Barmer|Bharatpur|Bhilwara|Bikaner|Bundi|Chittaurgarh|Churu|Dausa|Dhaulpur|Dungarpur|Ganganagar|Hanumangarh|Jaipur|Jaisalmer|Jalor|Jhalawar|Jhunjhunun|Jodhpur|Karauli|Kota|Nagaur|Pali|Pratapgarh|Rajsamand|Sawai Madhopur|Sikar|Sirohi|Tonk|Udaipur";
+
+        district_ar[23] = "East|North|South|West";
+
+        district_ar[24] = "Ariyalur|Chennai|Coimbatore|Cuddalore|Dharmapuri|Dindigul|Erode|Kancheepuram|Kanniyakumari|Karur|Krishnagiri|Madurai|Nagapattinam|Namakkal|Nilgiris|Perambalur|Pudukkottai|Ramanathapuram|Salem|Sivaganga|Thanjavur|Theni|Thiruvallur|Thiruvarur|Tiruchirappalli|Tirunelveli|Tirupur|Tiruvanamalai|Toothukudi|Vellore|Viluppuram|Virudhunagar";
+
+        district_ar[25] = "Adilabad|Hyderabad|Karim Nagar|Khammam|Mahbubnagar|Medak|Nalgonda|Nizamabad|Ranga Reddy|Warangal Urban";
+
+        district_ar[26] = "Dhalai|Gomati|Khowai|North Tripura|Sipahijala|South Tripura|Unakoti|West Tripura";
+
+        district_ar[27] = "Agra|Aligarh|Allahabad|Ambedkar Nagar|Auraiya|Azamgarh|Bagpat|Bahraich|Ballia|Balrampur|Banda|Barabanki|Bareilly|Basti|Bijnor|Budaun|Bulandshahar|C S M Nagar|Chandauli|Chitrakoot|Deoria|Etah|Etawah|Faizabad|Farrukhabad|Fatehpur|Firozabad|Gautam Buddha Nagar|Ghaziabad|Ghazipur|Gonda|Gorakhpur|Hamirpur|Hapur|Hardoi|Hathras|Jalaun|Jaunpur|Jhansi|Jyotiba Phule Nagar|Kannauj|Kanpur Dehat|Kanpur Nagar|Kashi Ram Nagar|Kaushambi|Kushinagar|Lakhimpur Kheri|Lalitpur|Lucknow|Maharajganj|Mahoba|Mainpuri|Mathura|Maunathbhanjan|Meerut|Mirzapur|Moradabad|Muzaffarnagar|Pilibhit|Pratapgarh|Rae Bareli|Rampur|Saharanpur|Sambhal|Sant Kabir Nagar|Sant Ravidas Nagar|Shahjahanpur|Shamli|Shrawasti|Siddharth Nagar|Sitapur|Sonbhadra|Sultanpur|Unnav|Varanasi";
+
+        district_ar[28] = "Almora|Bageshwar|Chamoli|Champawat|Dehradun|Garhwal|Hardwar|Nainital|Pithoragarh|Rudraprayag|Tehri Garhwal|Udham Singh Nagar|Uttarkashi";
+
+        district_ar[29] = "Alipurduar|Bankura|Barddhaman|Birbhum|Dakshin Dinajpur|Darjiling|Haora|Hugli|Jalpaiguri|Koch Bihar|Maldah|Murshidabad|Nadia|North Twenty Four Parganas|Paschim Medinipur|Purba Medinipur|Puruliya|South Twenty Four Parganas|Uttar Dinajpur";
+
+
+
+        district_ar[30] = "Nicobar|North and Middle Andaman|South Andaman";
+
+        district_ar[31] = "Chandigarh";
+
+        district_ar[32] = "Dadra and Nagar Haveli";
+
+        district_ar[33] = "Daman|Diu";
+
+        district_ar[34] = "Central|East|New Delhi|North|North East|North West|Shahdara|South|South East|South West|West";
+
+        district_ar[35] = "Lakshadweep";
+
+        district_ar[36] = "Karaikal|Mahe|Pondicherry|Yanam";
+
+
+        function populateDistrict(stateElementId, districtElementId) {
+        var selectedStateInd = document.getElementById(stateElementId).selectedIndex;
+        var districtElement = document.getElementById(districtElementId);
+        districtElement.length = 0;
+        districtElement.options[0] = new Option('Select district', '');
+        districtElement.selectedIndex = 0;
+        var district_a = district_ar[selectedStateInd].split("|");
+        for (var i = 0; i < district_a.length; i++) {
+            districtElement.options[districtElement.length] = new Option(district_a[i], district_a[i]);
+        }
+    }
+
+    function populateState(stateElementId, districtElementId) {
+        var stateElement = document.getElementById(stateElementId);
+        stateElement.length = 0;
+        stateElement.options[0] = new Option('Select state', '-1');
+        stateElement.selectedIndex = 0;
+        for (var i = 0; i < states_ar.length; i++) {
+            stateElement.options[stateElement.length] = new Option(states_ar[i], states_ar[i]);
+        }
+
+        if (districtElementId) {
+            stateElement.onchange = function () {
+                populateDistrict(stateElementId, districtElementId);
+            };
+        }
+    }
+</script>
+
+      <label for="state_i">State : </label>
+      <select id="state_i" name="state" required></select>
+      <br>
+      <br>
+      <label for="district_i">District : </label>
+      <select name="district" id="district_i" required></select>
+
+      <script language="javascript">
+      populateState("state_i", "district_i");
+      </script>
+      <br>
+      <br>
+      <label>Pincode : <input type="number" name="pincode" required placeholder="Enter Pincode"></label>
+      <br>
+      <br>
+      <label>Contact No. : <input type="number" name="number1" required placeholder="Enter Contact No."></label>
+      <br>
+      <br>
+      <label>Alternative Contact No. : <input type="text" name="number2" placeholder="Enter Alternative  No."></label>
+      <br>
+      <br>
+      <input class="btn btn-primary" type="submit" value="Update">
+      <input class="btn btn-primary" type="reset" value="Reset">
+
+    </form>
+
+  </div>
+
+
+
+
+
+
   
-    form.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevent the default form submission
-      
-      // Get the selected value from the dropdown
-      const selectedValue = dropdown.value;
-      
-      // Set the form action dynamically based on the selected value
-      form.action = `/your-express-route/${selectedValue}`;
-      
-      // Now you can submit the form
-      form.submit();
-    });
-  </script>
+  <!--  Script Tag   -->
+
+  <script src="script.js"></script>
 
 
+</body>
+
+</html>
 
 
 
